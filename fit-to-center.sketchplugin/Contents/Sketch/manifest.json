@@ -1,0 +1,24 @@
+{
+  "author" : "Ömür Yanıkoğlu",
+  "commands" : [
+    {
+      "script" : "script.cocoascript",
+      "handler" : "onRun",
+      "shortcut" : "ctrl shift alt f",
+      "name" : "Fit to Center",
+      "identifier" : "fittocenter"
+    }
+  ],
+  "menu" : {
+    "items" : [
+      "fittocenter"
+    ],
+    "title" : "Fit to Center"
+  },
+  "identifier" : "com.hayatbiralem.centerwithprecise",
+  "version" : 0.1,
+  "compatibleVersion": 3,
+  "description" : "This plugin takes the selected layer and fit to artboard by keeping its own ratio then move them for the center of artboard with more precise.",
+  "authorEmail" : "hayatbiralem@gmail.com",
+  "name" : "Sketch Fit to Center"
+}

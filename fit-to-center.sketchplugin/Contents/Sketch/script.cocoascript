@@ -1,0 +1,60 @@
+var onRun = function(context) {
+    var doc = context.document;
+    var selection = context.selection;
+    var count = selection.count();
+
+    if (count < 1) {
+        doc.showMessage("Please select a layer.");
+        return;
+
+    } else if (count > 1) {
+        doc.showMessage("Please select one layer.");
+        return;
+    } else {
+        var layer = selection[0];
+        var layerWidth = layer.frame().width();
+        var layerHeight = layer.frame().height();
+        var layerRatio = layerWidth / layerHeight;
+        var artboard = doc.currentPage().currentArtboard() || doc.currentPage();
+        var artboardWidth = artboard.frame().width();
+        var artboardHeight = artboard.frame().height();
+        var artboardRatio = artboardWidth / artboardHeight;
+        var newLayerWidth;
+        var newLayerHeight;
+        var newLayerX;
+        var newLayerY;
+
+        if(artboardRatio > layerRatio){
+
+        	// Fit height to artboard (by multipling ratio)
+        	newLayerWidth = artboardHeight * layerRatio;
+        	newLayerHeight = artboardHeight;
+
+        	// Move to center (for x axis)
+        	newLayerX = ((artboardWidth - newLayerWidth) / 2);
+        	newLayerY = 0;
+        } else {
+
+        	// Fit width to artboard (by dividing ratio)
+        	newLayerWidth = artboardWidth;
+        	newLayerHeight = artboardWidth / layerRatio;
+
+        	// Move to center (for y axis)
+        	newLayerX = 0;
+        	newLayerY = ((artboardHeight - newLayerHeight) / 2);
+        }
+
+
+    	// Move to center
+        layer.frame().setX(newLayerX);
+        layer.frame().setY(newLayerY);
+
+    	// Fit layer to artboard
+    	layer.frame().setHeight(newLayerHeight);
+    	layer.frame().setWidth(newLayerWidth);
+
+        // Deselect layer
+        doc.currentPage().deselectAllLayers();
+        layer.select_byExpandingSelection(true, true);
+    }
+};
